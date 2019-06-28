@@ -249,7 +249,7 @@ def read_sql_data(config, table_name, **kwg):
         print("sql_cmd: %s"%sql_cmd)
         #创建进度条对象
         import processbar as pbar
-        total = 100#默认100
+        total = 10#默认10
         bar = pbar.Processbar(total)
         showbar = pbar.showbar(bar)
         

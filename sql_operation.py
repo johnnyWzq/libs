@@ -136,7 +136,7 @@ def mapping_df_types(df):
     for i, j in zip(df.columns, df.dtypes):
         if "object" in str(j):
             dtypedict.update({i: NVARCHAR(length=255)})
-        if "float" in str(j):
+        if "float" in str(j) or "numpy.float64" in str(j):
             dtypedict.update({i: Float(precision=8, asdecimal=True)})
         if "int" in str(j):
             dtypedict.update({i: Integer()})
