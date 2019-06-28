@@ -49,7 +49,7 @@ def rs_jt_data():
     ioo.save_data_sql(data, config, table_name)
     
 def rs_bat_config_data():
-    config =  {'s': '192.168.1.105', 'u': 'data', 'p': 'For2019&tomorrow', 'db': 'test_bat', 'port': 3306}
+    config =  {'s': '192.168.1.105', 'u': 'data', 'p': 'For2019&tomorrow', 'db': 'bat_config', 'port': 3306}
     table_name = '电池信息表'
     data_dir = ioo.input_dir()
     print(data_dir)
@@ -58,7 +58,7 @@ def rs_bat_config_data():
     ioo.save_data_sql(data, config, table_name)
     
 def main():
-    rs_jt_data()
-    
+    #rs_jt_data()
+    rs_bat_config_data()
 if __name__ == '__main__':
     main()

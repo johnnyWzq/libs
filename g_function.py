@@ -226,6 +226,25 @@ def get_process_info(df, start_index, state):
     df_pro['end_time'] = df.iloc[-1]['stime']
     df_pro['data_num'] = len(df)
     return df_pro
+
+def filter_sequence(pro_info, r_filter=100, c_filter=100, d_filter=100, p_keywords='process_no', s_keywords='state', d_keywords='data_num'):
+    """
+    基于pro_info找到符合s_filter的充电及放电序列
+    返回三种状态process_no信息的list的dict
+    """
+    if pro_info is None or len(pro_info) < 3:
+        print('there is not enough data to sequenced.')
+        return None
+    process_no_dict = {}
+    state_dict = {0: r_filter, 1: c_filter, 2: d_filter}
+    temp_dict = {0: 'rest', 1: 'charge', 2: 'discharge'}
+    data_gp = pro_info.groupby(s_keywords)
+    for key in data_gp.groups.keys():
+        df = data_gp.get_group(key)
+        df = df[df[d_keywords] >= state_dict[key]]#筛选大于设定条件的过程
+        process_no_dict[temp_dict[key]] = df.loc[:, p_keywords].tolist()
+   
+    return process_no_dict
 ##--------------------------------------------------------------------------------
 def test():
     test=(

@@ -14,16 +14,15 @@ def get_cell_rate_para(config, cell_info):
     """
     #通过电池基础信息表获得电池基础参数
     """
-    C_RATE = 210
-    V_RATE = 3.2
-    T_REFER = 25
-        
+    bat_config = {'C_RATE': 210, 'V_RATE': 3.2, 'T_REFER': 25}
+    
     df = ioo.read_sql_data(config, '电池信息表')
     cell_info_list = set(df['电池型号'].tolist())
-    if cell_info in cell_info_list:
-        C_RATE = df[df['电池型号']==cell_info]['额定容量'].iloc[0]
-        V_RATE = df[df['电池型号']==cell_info]['额定电压'].iloc[0]
-    return C_RATE, V_RATE, T_REFER
+    if cell_info in cell_info_list: #暂时先按每个电芯做匹配
+        bat_config['C_RATE'] = df[df['电池型号']==cell_info]['额定容量'].iloc[0]
+        bat_config['V_RATE'] = df[df['电池型号']==cell_info]['额定电压'].iloc[0]
+        bat_config['bat_type'] = df[df['电池型号']==cell_info]['bat_type'].iloc[0]
+    return bat_config
 
 def get_feature_columns(file_dir, file_name):
     df = pd.read_csv(os.path.join(file_dir, file_name), encoding='gb18030')
