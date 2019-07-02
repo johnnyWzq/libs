@@ -156,7 +156,7 @@ def save_model(model, feature_name, pkl_dir, depth=None):
                              feature_names=feature_name)
     elif model_name == 'RandomForestRegressor':
         tree.export_graphviz(model.estimators_[0], os.path.join(pkl_dir, 'rf_depth%s.dot'%str(depth)),
-                             feature_names=feature_name, max_depth=3)
+                             feature_names=feature_name, max_depth=5)
         
 def load_model(model_name):
     model = joblib.load(model_name)

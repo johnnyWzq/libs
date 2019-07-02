@@ -148,7 +148,7 @@ def get_recent_time(time_list):
     index = time_list.index(s_time)
     return index
 
-def find_sequence(table_name, showbar=None, t_keywords='stime', cur_keywords='current', 
+def find_sequence(table_name, showbar=None, total=100, t_keywords='stime', cur_keywords='current', 
                   time_gap=300, charge_time=100, discharge_time=100, valid_cnt=100,
                   start_index=0, **kwg):
     """
@@ -184,7 +184,7 @@ def find_sequence(table_name, showbar=None, t_keywords='stime', cur_keywords='cu
     j_last = 0
     start_index = start_index
     df_len = len(df)
-    per = df_len // 100 + 1
+    per = df_len // total + 1
     if showbar != None:
         next(showbar)
     for j in range(1, df_len):

@@ -6,7 +6,7 @@ Created on Wed Jun 26 11:41:20 2019
 @author: wuzhiqiang
 将原始文件存入数据库
 """
-
+from dateutil import parser
 import io_operation as ioo
 
 def clean_data(data):
@@ -31,10 +31,10 @@ def clean_data(data):
                  'charge_c', 'discharge_c',
                  'charge_e', 'discharge_e', 'dv/dt', 'temperature']]
     data = data.dropna()
-    #data['stime'] = data['stime'].apply(str)
-    #data['stime'] = data['stime'].apply(lambda x: parser.parse(x))
-    #data = data.sort_values('stime')
-    #data['stime'] = data['stime'].apply(str)
+    data['stime'] = data['stime'].apply(str)
+    data['stime'] = data['stime'].apply(lambda x: parser.parse(x))
+    data = data.sort_values('stime')
+    data['stime'] = data['stime'].apply(str)
     return data
 
 def rs_jt_data():

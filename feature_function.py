@@ -115,3 +115,13 @@ def transfer_feature(data, score_key, C_RATE=38.0, V_RATE=3.6, T_REFER=20):
     data[score_key] = data[score_key] / C_RATE
     
     return data
+
+def drop_feature(data, is_current=True, is_dqdv=True):
+    if is_current:
+        data = data.drop([i for i in data.columns if '_current_' in i], axis=1)
+    if is_dqdv:
+        columns = [i for i in data.columns if '_dqdv_' in i]
+        column1 = [i for i in columns if '_max' in i]
+        column1.extend([i for i in columns if '_min' in i])
+        data = data.drop(column1, axis=1)
+    return data
