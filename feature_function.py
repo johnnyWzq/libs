@@ -70,6 +70,12 @@ def transfer_feature(data, score_key, C_RATE=38.0, V_RATE=3.6, T_REFER=20):
     data['current_diff2_median'] = data['current_diff2_median'] / C_RATE
     data['current_diff2_std'] = data['current_diff2_std'] / C_RATE
     
+    data['current_diffrate_mean'] = data['current_diffrate_mean'] / C_RATE
+    data['current_diffrate_min'] = data['current_diffrate_min'] / C_RATE
+    data['current_diffrate_max'] = data['current_diffrate_max'] / C_RATE
+    data['current_diffrate_median'] = data['current_diffrate_median'] / C_RATE
+    data['current_diffrate_std'] = data['current_diffrate_std'] / C_RATE
+    
     data['voltage_mean'] = data['voltage_mean'] / V_RATE
     data['voltage_min'] = data['voltage_min'] / V_RATE
     data['voltage_max'] = data['voltage_max'] / V_RATE
@@ -88,29 +94,42 @@ def transfer_feature(data, score_key, C_RATE=38.0, V_RATE=3.6, T_REFER=20):
     data['voltage_diff2_median'] = data['voltage_diff2_median'] / V_RATE
     data['voltage_diff2_std'] = data['voltage_diff2_std'] / V_RATE
     
+    data['voltage_diffrate_mean'] = data['voltage_diffrate_mean'] / V_RATE
+    data['voltage_diffrate_min'] = data['voltage_diffrate_min'] / V_RATE
+    data['voltage_diffrate_max'] = data['voltage_diffrate_max'] / V_RATE
+    data['voltage_diffrate_median'] = data['voltage_diffrate_median'] / V_RATE
+    data['voltage_diffrate_std'] = data['voltage_diffrate_std'] / V_RATE
+    
+    
     data['temperature_mean'] = data['temperature_mean'] / T_REFER
     data['temperature_min'] = data['temperature_min'] / T_REFER
     data['temperature_max'] = data['temperature_max'] / T_REFER
     data['temperature_median'] = data['temperature_median'] / T_REFER
     data['temperature_std'] = data['temperature_std'] / T_REFER
     
-    data['dqdv_mean'] = data['dqdv_mean'] / C_RATE * V_RATE
-    data['dqdv_min'] = data['dqdv_min'] / C_RATE * V_RATE
-    data['dqdv_max'] = data['dqdv_max'] / C_RATE * V_RATE
-    data['dqdv_median'] = data['dqdv_median'] / C_RATE * V_RATE
-    data['dqdv_std'] = data['dqdv_std'] / C_RATE * V_RATE
+    data['dqdv_mean'] = data['dqdv_mean'].abs() / C_RATE * V_RATE
+    data['dqdv_min'] = data['dqdv_min'].abs() / C_RATE * V_RATE
+    data['dqdv_max'] = data['dqdv_max'].abs() / C_RATE * V_RATE
+    data['dqdv_median'] = data['dqdv_median'].abs() / C_RATE * V_RATE
+    data['dqdv_std'] = data['dqdv_std'].abs() / C_RATE * V_RATE
     
-    data['dqdv_diff_mean'] = data['dqdv_diff_mean'] / C_RATE * V_RATE
-    data['dqdv_diff_min'] = data['dqdv_diff_min'] / C_RATE * V_RATE
-    data['dqdv_diff_max'] = data['dqdv_diff_max'] / C_RATE * V_RATE
-    data['dqdv_diff_median'] = data['dqdv_diff_median'] / C_RATE * V_RATE
-    data['dqdv_diff_std'] = data['dqdv_diff_std'] / C_RATE * V_RATE
+    data['dqdv_diff_mean'] = data['dqdv_diff_mean'].abs() / C_RATE * V_RATE
+    data['dqdv_diff_min'] = data['dqdv_diff_min'].abs() / C_RATE * V_RATE
+    data['dqdv_diff_max'] = data['dqdv_diff_max'].abs() / C_RATE * V_RATE
+    data['dqdv_diff_median'] = data['dqdv_diff_median'].abs() / C_RATE * V_RATE
+    data['dqdv_diff_std'] = data['dqdv_diff_std'].abs() / C_RATE * V_RATE
     
-    data['dqdv_diff2_mean'] = data['dqdv_diff2_mean'] / C_RATE * V_RATE
-    data['dqdv_diff2_min'] = data['dqdv_diff2_min'] / C_RATE * V_RATE
-    data['dqdv_diff2_max'] = data['dqdv_diff2_max'] / C_RATE * V_RATE
-    data['dqdv_diff2_median'] = data['dqdv_diff2_median'] / C_RATE * V_RATE
-    data['dqdv_diff2_std'] = data['dqdv_diff2_std'] / C_RATE * V_RATE
+    data['dqdv_diff2_mean'] = data['dqdv_diff2_mean'].abs() / C_RATE * V_RATE
+    data['dqdv_diff2_min'] = data['dqdv_diff2_min'].abs() / C_RATE * V_RATE
+    data['dqdv_diff2_max'] = data['dqdv_diff2_max'].abs() / C_RATE * V_RATE
+    data['dqdv_diff2_median'] = data['dqdv_diff2_median'].abs() / C_RATE * V_RATE
+    data['dqdv_diff2_std'] = data['dqdv_diff2_std'].abs() / C_RATE * V_RATE
+    
+    data['dqdv_diffrate_mean'] = data['dqdv_diffrate_mean'].abs() / C_RATE * V_RATE
+    data['dqdv_diffrate_min'] = data['dqdv_diffrate_min'].abs() / C_RATE * V_RATE
+    data['dqdv_diffrate_max'] = data['dqdv_diffrate_max'].abs() / C_RATE * V_RATE
+    data['dqdv_diffrate_median'] = data['dqdv_diffrate_median'].abs() / C_RATE * V_RATE
+    data['dqdv_diffrate_std'] = data['dqdv_diffrate_std'].abs() / C_RATE * V_RATE
     
     data[score_key] = data[score_key] / C_RATE
     
