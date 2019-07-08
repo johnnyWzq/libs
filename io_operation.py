@@ -220,12 +220,15 @@ def read_sql_data(config, table_name, **kwg):
     keywords = 'stime'
     no_scale = True
     nclip = 10
+    is_bar = False
     if 'keywords' in kwg:
         keywords = kwg['keywords']
     if 'no_scale' in kwg:
         no_scale = kwg['no_scale']
     if 'nclip' in kwg:
         nclip = kwg['nclip']
+    if 'is_bar' in kwg:
+        is_bar = kwg['is_bar']
     print('reading a table named %s...'%table_name)
     conn = sql.create_connection(config)
     if (sql.table_exists(conn, table_name)) == 1:
@@ -248,11 +251,13 @@ def read_sql_data(config, table_name, **kwg):
                 len_limit = min(limit, len_limit) #获得查询条数限制值
         print("sql_cmd: %s"%sql_cmd)
         #创建进度条对象
-        import processbar as pbar
-        total = 10#默认10
-        bar = pbar.Processbar(total)
-        showbar = pbar.showbar(bar)
-        
+         total = 10#默认10
+        if is_bar:
+            import processbar as pbar
+            bar = pbar.Processbar(total)
+            showbar = pbar.showbar(bar)
+        else:
+            showbar = None
         rows = sql.read_sql_bar(conn, sql_cmd, len_limit, showbar, total)
         bar.finish()
         #cursor.execute(sql_cmd)#获取数据行数
