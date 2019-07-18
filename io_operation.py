@@ -97,14 +97,17 @@ def read_excel(filename, **kwds):
     """
     regx = r'.*'
     sheet_name = None
+    skiprows = None
     if 'regx' in kwds:
        regx = kwds['regx']
     if 'sheet_name' in kwds:
        sheet_name = kwds['sheet_name']
+    if 'skiprows' in kwds:
+        skiprows = kwds['skiprows']
     print('reading a excel file...')
     temp = pd.DataFrame()
     start = time.time()
-    data_dict = pd.read_excel(filename, sheet_name=sheet_name, encoding='gb18030')
+    data_dict = pd.read_excel(filename, sheet_name=sheet_name, skiprows=skiprows, encoding='gb18030')
     for key, value in data_dict.items():
         if re.match(regx, key) and value is not None:
             temp = temp.append(value, ignore_index=True)
