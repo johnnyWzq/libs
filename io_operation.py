@@ -251,7 +251,7 @@ def read_sql_data(config, table_name, **kwg):
                 len_limit = min(limit, len_limit) #获得查询条数限制值
         print("sql_cmd: %s"%sql_cmd)
         #创建进度条对象
-         total = 10#默认10
+        total = 10#默认10
         if is_bar:
             import processbar as pbar
             bar = pbar.Processbar(total)
@@ -259,7 +259,8 @@ def read_sql_data(config, table_name, **kwg):
         else:
             showbar = None
         rows = sql.read_sql_bar(conn, sql_cmd, len_limit, showbar, total)
-        bar.finish()
+        if is_bar:
+            bar.finish()
         #cursor.execute(sql_cmd)#获取数据行数
         #rows = cursor.fetchall()
         end = time.time()
@@ -309,6 +310,17 @@ def save_data_xlsx(data, max_lens, filename, output_dir=None):
             i = i + max_lens
             j = j - max_lens
         print('The whole data has been saved.')
+        
+def save_dict_xlsx(data_dict,  filename, output_dir):
+    if data_dict is None:
+        print('The data is None.')
+    elif output_dir:
+        if not os.path.exists(output_dir):
+            os.mkdir(output_dir)
+        writer = pd.ExcelWriter(os.path.join(output_dir, '%s.xlsx'%filename))
+        for key, data in data_dict.items():
+            data.to_excel(writer, key)
+        print('The dict has been saved.')
         
 def save_data_csv(data, filename, output_dir=None, chunksize=None):
     """
@@ -370,7 +382,6 @@ def insert_data_sql(data, config, table_name, *col):
             sql_cmd = "INSERT INTO %s (%s) VALUES (%s)"%(table_name, cols, vs)
             print('sql_cmd:' + sql_cmd)
             sql.exe_update(conn, sql_cmd)
-            
         
 def save_model_result(res, model_list, result_dir, prefix):
     if not os.path.exists(result_dir):

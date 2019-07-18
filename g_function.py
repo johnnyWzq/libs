@@ -34,8 +34,8 @@ def transfer_data(tick, cur_df, keywords='stime'):
     """
     df = pd.DataFrame(columns=['start_tick', 'end_tick',
                                'data_num'])
-    df.loc[tick, 'start_tick'] = cur_df[keywords].iloc[0]
-    df.loc[tick, 'end_tick'] = cur_df[keywords].iloc[-1]
+    df.loc[tick, 'start_tick'] = str(cur_df[keywords].iloc[0])
+    df.loc[tick, 'end_tick'] = str(cur_df[keywords].iloc[-1])
     df.loc[tick, 'data_num'] = len(cur_df)
     df.loc[tick, 'c'] = np.abs(cur_df['c'].iloc[-1])
     
