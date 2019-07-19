@@ -67,7 +67,7 @@ def add_sample_time(sample_time=1):
         
 def main():
     #rs_jt_data()
-    #rs_bat_config_data()
-    add_sample_time(10)
+    rs_bat_config_data()
+    #add_sample_time(10)
 if __name__ == '__main__':
     main()

@@ -225,7 +225,7 @@ def get_process_info(df, start_index, state):
     df_pro['start_time'] = df.iloc[0]['stime']
     df_pro['end_time'] = df.iloc[-1]['stime']
     df_pro['data_num'] = len(df)
-    df_pro['sample_time'] = int((df_pro['end_time'] - df_pro['stime']).seconds / df_pro['data_num'])
+    df_pro['sample_time'] = int((df_pro['end_time'].iloc[0] - df_pro['start_time'].iloc[0]).seconds / (df_pro['data_num'].iloc[0] - 1))
     return df_pro
 
 def filter_sequence(pro_info, r_filter=100, c_filter=100, d_filter=100, p_keywords='process_no', s_keywords='state', d_keywords='data_num'):
