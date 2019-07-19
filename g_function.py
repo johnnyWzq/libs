@@ -207,7 +207,9 @@ def find_sequence(table_name, showbar=None, total=100, t_keywords='stime', cur_k
             if state_last != state_cur and (j - cad_time) < j_last:#电流状态改变持续时间不够条件
                 valid_flag = False
             if valid_flag:
-                pro_df.append(get_process_info(cur_df, start_index, state))
+                tmp = get_process_info(cur_df, start_index, state)
+                if tmp is not None:
+                    pro_df.append(tmp)
                 start_index += 1   #只有满足条件了才改变     
                 j_last = j
         valid_flag = False
@@ -217,6 +219,8 @@ def find_sequence(table_name, showbar=None, total=100, t_keywords='stime', cur_k
     return pro_df
 
 def get_process_info(df, start_index, state):
+    if len(df) <= 1:
+        return None
     df_pro = pd.DataFrame(index=range(1), columns=('process_no','state','start_index','end_index','start_time','end_time','data_num'))
     df_pro['process_no'] = start_index
     df_pro['state'] = state
