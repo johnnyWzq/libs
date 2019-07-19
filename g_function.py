@@ -58,7 +58,7 @@ def cal_stat_row(cnt, ser, col_name, df0):
     func = lambda x: x.fillna(method='ffill').fillna(method='bfill').dropna()
     ser = ser.replace(np.inf, np.nan)
     ser = ser.replace(-np.inf, np.nan)
-    ser = func(ser)
+    #ser = func(ser)
     df.loc[cnt, col_name + '_mean'] = ser.mean(skipna=True)
     df.loc[cnt, col_name + '_min'] = ser.min(skipna=True)
     df.loc[cnt, col_name + '_max'] = ser.max(skipna=True)
