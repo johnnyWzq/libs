@@ -23,12 +23,16 @@ def get_cell_rate_para(config, cell_info, fuzzy=False):
             bat_config['C_RATE'] = df[df['电池型号']==cell_info]['额定容量'].iloc[0]
             bat_config['V_RATE'] = df[df['电池型号']==cell_info]['额定电压'].iloc[0]
             bat_config['bat_type'] = df[df['电池型号']==cell_info]['bat_type'].iloc[0]
+            bat_config['parallel'] = df[df['电池型号']==cell_info]['并联数'].iloc[0]
+            bat_config['series'] = df[df['电池型号']==cell_info]['串联数'].iloc[0]
     else:
         for cell_reg in cell_info_list:
             if re.match(cell_reg, cell_info):
                 bat_config['C_RATE'] = df[df['电池型号']==cell_reg]['额定容量'].iloc[0]
                 bat_config['V_RATE'] = df[df['电池型号']==cell_reg]['额定电压'].iloc[0]
                 bat_config['bat_type'] = df[df['电池型号']==cell_reg]['bat_type'].iloc[0]
+                bat_config['parallel'] = df[df['电池型号']==cell_reg]['并联数'].iloc[0]
+                bat_config['series'] = df[df['电池型号']==cell_reg]['串联数'].iloc[0]
                 break
     return bat_config
 

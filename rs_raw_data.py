@@ -57,8 +57,17 @@ def rs_bat_config_data():
     data = ioo.read_excel_files(data_dir, regx)
     ioo.save_data_sql(data, config, table_name)
     
+def add_sample_time(sample_time=1):
+    #对已有对pro_info增加sample——time列
+    config =  {'s': '192.168.1.105', 'u': 'data', 'p': 'For2019&tomorrow', 'db': 'test_bat', 'port': 3306}
+    bat_list = ioo.input_table_name(config)
+    for bat in bat_list:
+        ioo.insert_col_sql(config, bat, 'sample_time')
+        ioo.modify_data_sql(config, bat, 'sample_time', sample_time)
+        
 def main():
     #rs_jt_data()
-    rs_bat_config_data()
+    #rs_bat_config_data()
+    add_sample_time(10)
 if __name__ == '__main__':
     main()

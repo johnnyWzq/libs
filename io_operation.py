@@ -385,7 +385,20 @@ def insert_data_sql(data, config, table_name, *col):
             sql_cmd = "INSERT INTO %s (%s) VALUES (%s)"%(table_name, cols, vs)
             print('sql_cmd:' + sql_cmd)
             sql.exe_update(conn, sql_cmd)
+            
+def insert_col_sql(config, table_name, col_name):
+    conn = sql.create_connection(config)
+    if (sql.table_exists(conn, table_name)) == 1:
+        print('the table is existe.')
+        sql_cmd = "alter table %s add column %s Integer"%(table_name, col_name)
+        sql.exe_update(conn, sql_cmd)
         
+def modify_data_sql(config, table_name, col_name, value):
+    conn = sql.create_connection(config)
+    sql_cmd = "update %s set %s='%d'"%(table_name, col_name, value)
+    print('sql_cmd:' + sql_cmd)
+    sql.exe_update(conn, sql_cmd)
+            
 def save_model_result(res, model_list, result_dir, prefix):
     if not os.path.exists(result_dir):
             os.mkdir(result_dir)
