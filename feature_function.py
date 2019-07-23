@@ -14,7 +14,7 @@ def get_cell_rate_para(config, cell_info, fuzzy=False):
     """
     #通过电池基础信息表获得电池基础参数
     """
-    bat_config = {'C_RATE': 210, 'V_RATE': 3.2, 'T_REFER': 25}
+    bat_config = {'C_RATE': 210, 'V_RATE': 3.2, 'T_REFER': 20}
     
     df = ioo.read_sql_data(config, '电池信息表')
     cell_info_list = set(df['电池型号'].tolist())
