@@ -16,12 +16,13 @@ import pandas as pd
 import sql_operation as sql
 #import pymysql
 
-def input_dir():
+def input_dir(data_dir=None):
     """
     通过键盘输入获得文件的目录
     """
     for i in range(3):
-        data_dir = input("输入文件所在目录：")
+        if data_dir is  None:
+            data_dir = input("输入文件所在目录：")
         if os.path.exists(data_dir):
             return data_dir
         else:
