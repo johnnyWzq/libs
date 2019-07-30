@@ -26,6 +26,8 @@ from sklearn.externals import joblib
 from sklearn import tree
 from sklearn import preprocessing
 from sklearn.preprocessing import MinMaxScaler
+import matplotlib.pyplot as plt
+
 
 def select_feature(data_x, data_y, feature_num=100, method='f_regression'):
     features_chosen = data_x.columns
@@ -137,7 +139,7 @@ def cv_model(model, allX, allY, cv_num=10):
         print("%s: %0.4f (+/- %0.4f)" % (i, scores[i].mean(), scores[i].std() * 2))
     return scores
         
-def save_model(model, feature_name, pkl_dir, depth=None):
+def save_model(model, feature_name, pkl_dir, depth=None, is_view=True):
     if not os.path.exists(pkl_dir):
             os.mkdir(pkl_dir)
     get_model_name = lambda x:x[0:x.find('(')]
@@ -157,7 +159,8 @@ def save_model(model, feature_name, pkl_dir, depth=None):
     elif model_name == 'RandomForestRegressor':
         tree.export_graphviz(model.estimators_[0], os.path.join(pkl_dir, 'rf_depth%s.dot'%str(depth)),
                              feature_names=feature_name, max_depth=depth)
-        
+        if is_view:
+            view_importances(model, feature_names=feature_name)
 def load_model(model_name):
     model = joblib.load(model_name)
     return model
@@ -173,3 +176,17 @@ def valid_model(model, data_x, data_y, feature_method, feature_num=100):
     print('----------------------------------------')
     res = pd.DataFrame({'test:true_y': np_y, 'test:pred_y': model.predict(np_x)})
     return res
+
+def view_importances(model, feature_names):
+    importances = model.feature_importances_
+    print('每个维度对应的重要性因子：\n',importances)
+    fig, ax = plt.subplots()
+    ax.bar(range(len(importances)), importances)
+    ax.set_title("Feature Importances")
+    plt.show()
+    
+    importances = pd.DataFrame(importances.reshape(1, len(feature_names)), columns=feature_names)
+    #indices = np.argsort(importances)[::-1]# a[::-1]让a逆序输出
+    indices = importances.sort_values(by=0, axis=1, ascending=False)
+    print('得到按维度重要性因子排序的前6个维度：\n', indices.columns[:6])
+    

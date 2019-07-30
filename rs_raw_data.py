@@ -50,6 +50,7 @@ def rs_jt_data():
     
 def rs_bat_config_data():
     config =  {'s': '192.168.1.105', 'u': 'data', 'p': 'For2019&tomorrow', 'db': 'bat_config', 'port': 3306}
+    #config =  {'s': 'localhost', 'u': 'root', 'p': 'wzqsql', 'db': 'cell_lg36', 'port': 3306}
     table_name = '电池信息表'
     data_dir = ioo.input_dir()
     print(data_dir)

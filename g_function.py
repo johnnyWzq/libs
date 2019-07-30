@@ -178,7 +178,7 @@ def find_sequence(table_name, showbar=None, total=100, t_keywords='stime', cur_k
     df['state'] = np.nan
     df['state'][df['current'] > cha_current] = 1
     df['state'][df['current'] < dis_current] = 2
-    df['state'][df['current'] == 0] = 0
+    df['state'] = df['state'].fillna(0)
     #开始划分
     pro_df = []
     j_last = 0
