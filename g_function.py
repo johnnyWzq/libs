@@ -207,7 +207,7 @@ def find_sequence(table_name, showbar=None, total=100, t_keywords='stime', cur_k
             if state_last != state_cur and (j - cad_time) < j_last:#电流状态改变持续时间不够条件
                 valid_flag = False
             if valid_flag:
-                tmp = get_process_info(cur_df, start_index, state)
+                tmp = get_process_info(cur_df, start_index, state, cad_time/10)
                 if tmp is not None:
                     pro_df.append(tmp)
                 start_index += 1   #只有满足条件了才改变     
@@ -218,7 +218,7 @@ def find_sequence(table_name, showbar=None, total=100, t_keywords='stime', cur_k
     pro_df = pd.concat(tuple(pro_df), axis=0)
     return pro_df
 
-def get_process_info(df, start_index, state):
+def get_process_info(df, start_index, state, bias=10):
     if len(df) <= 1:
         return None
     df_pro = pd.DataFrame(index=range(1), columns=('process_no','state','start_index','end_index','start_time','end_time','data_num'))
@@ -229,7 +229,7 @@ def get_process_info(df, start_index, state):
     df_pro['start_time'] = df.iloc[0]['stime']
     df_pro['end_time'] = df.iloc[-1]['stime']
     df_pro['data_num'] = len(df)
-    df_pro['sample_time'] = int((df_pro['end_time'].iloc[0] - df_pro['start_time'].iloc[0]).seconds / (df_pro['data_num'].iloc[0] - 10))
+    df_pro['sample_time'] = int((df_pro['end_time'].iloc[0] - df_pro['start_time'].iloc[0]).seconds / (df_pro['data_num'].iloc[0] - bias))
     return df_pro
 
 def filter_sequence(pro_info, r_filter=100, c_filter=100, d_filter=100, p_keywords='process_no', s_keywords='state', d_keywords='data_num'):
