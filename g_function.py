@@ -250,6 +250,17 @@ def filter_sequence(pro_info, r_filter=100, c_filter=100, d_filter=100, p_keywor
         process_no_dict[temp_dict[key]] = df.loc[:, p_keywords].tolist()
    
     return process_no_dict
+
+def filter_burr(df, value):
+    df = df.loc[:, df.dtypes==float]
+    for col in df.columns:
+        for i in range(1, len(df) - 2):
+            if (abs(df[col].iloc[i] - df[col].iloc[i - 1]) > value and \
+                    abs(df[col].iloc[i + 2] - df[col].iloc[i + 1]) > value) \
+                    or (abs(df[col].iloc[i] - df[col].iloc[i - 1]) > value and \
+                        abs(df[col].iloc[i] - df[col].iloc[i + 1]) > value):
+                df[col].iloc[i] = df[col].iloc[i - 1]
+    return df
 ##--------------------------------------------------------------------------------
 def test():
     test=(
